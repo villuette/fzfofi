@@ -5,6 +5,7 @@ Simple tui program like `rofi` and others, for simple starting desktop applicati
 *important: installer writes include in ~/.config/sway/config file and creates a directory near it*
 - `fzf`
 - `sway`
+- `kitty`
 ## Installation
 Just run:
 ```git clone https://github.com/villuette/fzfofi.git /tmp/fzfofi
