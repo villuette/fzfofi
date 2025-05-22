@@ -13,7 +13,7 @@ cd /tmp/fzfofi
 chmod +x ./fzfofi_install.sh
 ./fzfofi_install.sh
 ```
-then open file `~/.config/sway/fzfofi` and uncomment bindsym (*change this shortcut if exists*)
+then open file `~/.config/sway/fzfofi` and uncomment bindsym (*change this shortcut if exists*)  
 after that, reload sway (by default `Mod+Shift+C`)
 
 ## Notes
