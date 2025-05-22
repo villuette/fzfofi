@@ -8,7 +8,8 @@ Simple tui program like `rofi` and others, for simple starting desktop applicati
 - `kitty`
 ## Installation
 Just run:
-```git clone https://github.com/villuette/fzfofi.git /tmp/fzfofi
+```
+git clone https://github.com/villuette/fzfofi.git /tmp/fzfofi
 cd /tmp/fzfofi
 chmod +x ./fzfofi_install.sh
 ./fzfofi_install.sh
