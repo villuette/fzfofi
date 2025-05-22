@@ -3,8 +3,8 @@
 Simple tui program like `rofi` and others, for simple starting desktop applications in sway.
 ## Dependencies
 *important: installer writes include in ~/.config/sway/config file and creates a directory near it*
-`fzf`
-`sway`
+- `fzf`
+- `sway`
 ## Installation
 Just run:
 `git clone https://github.com/villuette/fzfofi.git /tmp/fzfofi
