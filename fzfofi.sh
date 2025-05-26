@@ -1,24 +1,33 @@
-#!/bin/sh
+#!/bin/bash
 
 cache_dir="$HOME/.cache/app_launcher"
+mkdir -p "$cache_dir"
+
 cache_file="$cache_dir/cache"
 hash_file="$cache_dir/hash"
 
-db_dir="/usr/share/applications"
-db_cache="$db_dir/mimeinfo.cache"
+mapfile -t desktop_dirs < <(printf "%s\n%s\n" "/usr/share/applications" "$HOME/.local/share/applications")
+#flatpak support
+desktop_dirs+=("$HOME/.local/share/flatpak/exports/share/applications")
+desktop_dirs+=("/var/lib/flatpak/exports/share/applications")
 
-mkdir -p "$cache_dir"
 
-current_hash=$(sha256sum "$db_cache" 2>/dev/null | awk '{print $1}')
+# Compute hash of desktop file metadata
+current_hash=$(for dir in "${desktop_dirs[@]}"; do
+    if [ -d "$dir" ]; then
+        find "$dir" -maxdepth 1 -type f -name "*.desktop" -printf "%p %T@\n" | sort
+    fi
+done | sha256sum | awk '{print $1}')
 
 stored_hash=$(cat "$hash_file" 2>/dev/null || echo "")
+
 
 #update hash due inequality
 if [ "$current_hash" != "$stored_hash" ]; then
     printf "Updating cache...\n"
 
-    #parsing Name|Exec
-    find "$db_dir" -maxdepth 1 -type f -name "*.desktop" -exec sh -c '
+    # Find all desktop files in those dirs
+    find "${desktop_dirs[@]}" -maxdepth 1 -type f -name "*.desktop" -exec sh -c '
     for file; do
         name=$(grep -m 1 "^Name=" "$file" | cut -d= -f2-)
         exec_line=$(grep -m 1 "^Exec=" "$file" | cut -d= -f2- | sed "s/%[uUfFdDnNp]//g")
