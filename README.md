@@ -15,7 +15,14 @@ chmod +x ./fzfofi_install.sh
 ./fzfofi_install.sh
 ```
 then open file `~/.config/sway/fzfofi` and uncomment bindsym (*change this shortcut if exists*)  
-after that, reload sway (by default `Mod+Shift+C`)
+after that, reload sway (by default `Mod+Shift+C`)  
+
+also you can use the desktop_generator.sh for user-defined desktop entries, it takes:
+
+- name of app
+- fullpath to binary
+
+then it stores it in ~/.local/share/applications
 
 ## Notes
 made for fun, never written shell scripts before, open to discuss :)
