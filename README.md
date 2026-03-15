@@ -1,28 +1,59 @@
-# fzfofi
-## Description
-Simple tui program like `rofi` and others, for simple starting desktop applications in sway.
-## Dependencies
-*important: installer writes include in ~/.config/sway/config file and creates a directory near it*
-- `fzf`
-- `sway`
-- `kitty`
-## Installation
-Just run:
+
+# FZF-OFI: Minimalist Sway Launcher
+
+**FZF-OFI** — это легковесный лаунчер приложений для Sway, работающий на базе `fzf`. Он обеспечивает быстрый поиск и запуск программ без нагрузки, свойственной тяжелым графическим меню.
+
+
+
+## Основные возможности
+* **Поиск:** Fuzzy-поиск через `fzf` для мгновенного нахождения нужной программы.
+* **Кэширование:** Сканирует стандартные директории (`/usr/share/applications` и др.) и кэширует результаты для высокой скорости работы.
+* **Интеграция со Sway:** Работает как плавающее окно, настроенное через Sway-конфиг.
+* **Минимализм:** Использует только Bash, `fzf` и стандартные утилиты Linux.
+
+## Установка
+
+### Требования
+* `fzf`
+* `kitty` (или любой другой терминал, поддерживающий `--app-id`)
+* `sway`
+
+### Порядок действий
+1. Сделайте скрипт установки исполняемым:
+   ```bash
+   chmod +x install.sh
+
 ```
-git clone https://github.com/villuette/fzfofi.git /tmp/fzfofi
-cd /tmp/fzfofi
-chmod +x ./fzfofi_install.sh
-./fzfofi_install.sh
+
+2. Запустите его:
+```bash
+./install.sh
+
 ```
-then open file `~/.config/sway/fzfofi` and uncomment bindsym (*change this shortcut if exists*)  
-after that, reload sway (by default `Mod+Shift+C`)  
 
-also you can use the `desktop_generator.sh` for user-defined desktop entries, it takes:
 
-- name of app
-- **fullpath** to binary
+3. Перезагрузите конфигурацию Sway (обычно `Mod+Shift+C`).
 
-then it stores it in `~/.local/share/applications`
+## Принцип работы
 
-## Notes
-made for fun, never written shell scripts before, open to discuss :)
+1. **Парсинг:** Скрипт находит все файлы `.desktop` в системе и пользовательских директориях.
+2. **Кэширование:** Имена приложений и команды запуска сохраняются в `~/.cache/app_launcher/cache`.
+3. **Хэширование:** Скрипт создает хэш временных меток файлов, чтобы обновлять кэш только при изменении состава установленных приложений.
+4. **Запуск:** При нажатии горячей клавиши (`Mod+d`) открывается терминал в плавающем режиме, в котором вы выбираете приложение, и оно запускается через `swaymsg`.
+
+## Настройка
+
+После установки в `~/.config/sway/fzfofi` появится файл конфигурации. Вы можете изменить:
+
+* **Терминал:** Замените `kitty` на ваш любимый эмулятор.
+* **Размер окна:** Отредактируйте строку `resize set 800 200`.
+
+## Устранение неполадок
+
+Если список приложений перестал обновляться, вы можете принудительно очистить кэш:
+
+```bash
+rm -rf ~/.cache/app_launcher
+
+```
+
